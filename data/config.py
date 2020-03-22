@@ -157,7 +157,7 @@ coco2017_testdev_dataset = dataset_base.copy({
 my_custom_dataset = dataset_base.copy({
     'name': 'My Dataset',
 
-    'train_images': './data/coco/annotations/trainval.json',
+    'train_images': './data/coco/images',
     'train_info':   './data/coco/annotations/trainval.json',
 
     'valid_images': './data/coco/annotations/trainval.json',
@@ -427,7 +427,7 @@ fpn_base = Config({
 # ----------------------- CONFIG DEFAULTS ----------------------- #
 
 coco_base_config = Config({
-    'dataset': my_custom_dataset,
+    'dataset': coco2014_dataset,
     'num_classes': 81, # This should include the background class
 
     'max_iter': 400000,
@@ -669,7 +669,7 @@ yolact_base_config = coco_base_config.copy({
     'name': 'yolact_base',
 
     # Dataset stuff
-    'dataset': coco2017_dataset,
+    'dataset': my_custom_dataset,
     'num_classes': len(coco2017_dataset.class_names) + 1,
 
     # Image Size
