@@ -1,10 +1,10 @@
+import cv2
 import os
 import os.path as osp
 import sys
 import torch
 import torch.utils.data as data
 import torch.nn.functional as F
-import cv2
 import numpy as np
 from .config import cfg
 from pycocotools import mask as maskUtils
@@ -169,18 +169,17 @@ class COCODetection(data.Dataset):
                 masks = None
                 target = None
 
-        if target.shape[0] == 0:
-            print('Warning: Augmentation output an example with no ground truth. Resampling...')
-            return self.pull_item(random.randint(0, len(self.ids)-1))
+       # if target.shape[0] == 0:
+           # print('Warning: Augmentation output an example with no ground truth. Resampling...')
+            #return self.pull_item(random.randint(0, len(self.ids)-1))
+            
 
         return torch.from_numpy(img).permute(2, 0, 1), target, masks, height, width, num_crowds
 
     def pull_image(self, index):
         '''Returns the original image object at index in PIL form
-
         Note: not using self.__getitem__(), as any transformations passed in
         could mess up this functionality.
-
         Argument:
             index (int): index of img to show
         Return:
@@ -192,10 +191,8 @@ class COCODetection(data.Dataset):
 
     def pull_anno(self, index):
         '''Returns the original annotation of image at index
-
         Note: not using self.__getitem__(), as any transformations passed in
         could mess up this functionality.
-
         Argument:
             index (int): index of img to get annotation of
         Return:
@@ -260,10 +257,8 @@ def enforce_size(img, targets, masks, num_crowds, new_w, new_h):
 def detection_collate(batch):
     """Custom collate fn for dealing with batches of images that have a different
     number of associated object annotations (bounding boxes).
-
     Arguments:
         batch: (tuple) A tuple of tensor images and (lists of annotations, masks)
-
     Return:
         A tuple containing:
             1) (tensor) batch of images stacked on their 0 dim
